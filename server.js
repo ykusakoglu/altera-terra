@@ -7,7 +7,7 @@ const root = path.dirname(fileURLToPath(import.meta.url));
 const port = process.env.PORT || 3000;
 const server = http.createServer((req, res) => {
   const requestPath = req.url === '/' ? '/preview-final.html' : req.url.split('?')[0];
-  const assetPath = requestPath.startsWith('/assets/') ? `/public${requestPath}` : requestPath.startsWith('/public/') ? requestPath.slice('/public'.length) : requestPath;
+  const assetPath = requestPath.startsWith('/assets/') ? `/public${requestPath}` : requestPath;
   const filePath = path.join(root, assetPath);
   if (!filePath.startsWith(root)) { res.writeHead(403); return res.end('Forbidden'); }
   fs.readFile(filePath, (error, data) => {
