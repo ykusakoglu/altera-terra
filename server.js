@@ -11,7 +11,7 @@ const server = http.createServer((req, res) => {
   if (!filePath.startsWith(root)) { res.writeHead(403); return res.end('Forbidden'); }
   fs.readFile(filePath, (error, data) => {
     if (error) { res.writeHead(404); return res.end('Not found'); }
-    const type = filePath.endsWith('.html') ? 'text/html; charset=utf-8' : 'application/octet-stream';
+    const type = filePath.endsWith('.html') ? 'text/html; charset=utf-8' : filePath.endsWith('.webmanifest') ? 'application/manifest+json' : filePath.endsWith('.png') ? 'image/png' : filePath.endsWith('.jpg') || filePath.endsWith('.jpeg') ? 'image/jpeg' : 'application/octet-stream';
     res.writeHead(200, { 'Content-Type': type, 'Cache-Control': 'public, max-age=3600' });
     res.end(data);
   });
